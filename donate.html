@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Support Unity Force Bangladesh - Donate to help our humanitarian services">
+    <meta name="keywords" content="donate, support, Unity Force Bangladesh, bKash, Nagad, Upay">
+    <title>Donate Us - Unity Force Bangladesh</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .donation-section {
+            padding: 2rem 0;
+        }
+
+        .donation-info {
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-red));
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .donation-info h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .payment-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .payment-card img {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .payment-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .payment-number {
+            font-size: 1.2rem;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .donation-form {
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .amount-btn {
+            padding: 0.8rem;
+            border: 1px solid var(--primary-blue);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--primary-blue);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .amount-btn:hover,
+        .amount-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-red);
+        }
+
+        .donation-tracking {
+            margin-top: 3rem;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tracking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .tracking-table th,
+        .tracking-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tracking-table th {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .tracking-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .amount-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tracking-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">Unity Force BD</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-translate="nav-home">Home</a></li>
+                <li><a href="complaint.html" class="nav-link" data-translate="nav-complaint">File a Complaint</a></li>
+                <li><a href="blood-donation.html" class="nav-link" data-translate="nav-blood">Blood Donation</a></li>
+                <li><a href="health-treatment.html" class="nav-link" data-translate="nav-health">Free Health Treatment</a></li>
+                <li><a href="donate.html" class="nav-link" data-translate="nav-donate">Donate Us</a></li>
+                <li><a href="about.html" class="nav-link" data-translate="nav-about">About Us</a></li>
+                <li><a href="login.html" class="nav-link" data-translate="nav-login">Login</a></li>
+            </ul>
+            <button id="languageToggle" class="language-toggle" data-translate="language-toggle">বাংলা</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Donation Information -->
+        <section class="donation-info">
+            <h2 data-translate="donate-title">Support Our Cause</h2>
+            <p data-translate="donate-desc">Your donation helps us continue our humanitarian services in Chattogram</p>
+        </section>
+
+        <!-- Payment Methods -->
+        <section class="payment-methods">
+            <!-- bKash -->
+            <div class="payment-card" onclick="openDonationModal('bKash')">
+                <img src="https://www.logo.wine/a/logo/BKash/BKash-Icon-Logo.wine.svg" alt="bKash Logo">
+                <h3>bKash</h3>
+                <p class="payment-number">01712345678</p>
+                <p data-translate="payment-instruction">Click to donate via bKash</p>
+            </div>
+
+            <!-- Nagad -->
+            <div class="payment-card" onclick="openDonationModal('Nagad')">
+                <img src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png" alt="Nagad Logo">
+                <h3>Nagad</h3>
+                <p class="payment-number">01812345678</p>
+                <p data-translate="payment-instruction">Click to donate via Nagad</p>
+            </div>
+
+            <!-- Upay -->
+            <div class="payment-card" onclick="openDonationModal('Upay')">
+                <img src="https://play-lh.googleusercontent.com/Iks014Ul-ybY_5WGLI0oOtTmqXkHqGW3BNHX4FNwADxnlOkYBDXqpBDKU8nW5PaEXQ" alt="Upay Logo">
+                <h3>Upay</h3>
+                <p class="payment-number">01912345678</p>
+                <p data-translate="payment-instruction">Click to donate via Upay</p>
+            </div>
+
+            <!-- Bank Transfer -->
+            <div class="payment-card" onclick="openDonationModal('Bank')">
+                <i class="fas fa-university fa-3x" style="color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                <h3>Bank Transfer</h3>
+                <p class="payment-number">1234567890</p>
+                <p data-translate="payment-instruction">Click to donate via Bank Transfer</p>
+            </div>
+        </section>
+
+        <!-- Donation Modal -->
+        <div class="modal" id="donationModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modalTitle">Donate via <span id="paymentMethod"></span></h2>
+                <div class="success-message" id="successMessage" data-translate="donation-success">
+                    Thank you for your donation! Your support means a lot to us.
+                </div>
+                <form class="donation-form" id="donationForm">
+                    <div class="form-group">
+                        <label data-translate="form-amount">Select Amount (BDT)</label>
+                        <div class="amount-buttons">
+                            <button type="button" class="amount-btn" data-amount="500">500</button>
+                            <button type="button" class="amount-btn" data-amount="1000">1,000</button>
+                            <button type="button" class="amount-btn" data-amount="2000">2,000</button>
+                            <button type="button" class="amount-btn" data-amount="5000">5,000</button>
+                            <button type="button" class="amount-btn" data-amount="10000">10,000</button>
+                            <button type="button" class="amount-btn" data-amount="custom">Custom</button>
+                        </div>
+                        <input type="number" id="customAmount" placeholder="Enter custom amount" style="display: none;">
+                    </div>
+                    <div class="form-group">
+                        <label for="donorName" data-translate="form-name">Name</label>
+                        <input type="text" id="donorName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="donorPhone" data-translate="form-phone">Phone Number</label>
+                        <input type="tel" id="donorPhone" required pattern="[0-9]{11}">
+                    </div>
+                    <div class="form-group">
+                        <label for="donorEmail" data-translate="form-email">Email (Optional)</label>
+                        <input type="email" id="donorEmail">
+                    </div>
+                    <button type="submit" class="submit-btn" data-translate="confirm-donation">Confirm Donation</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Donation Tracking -->
+        <section class="donation-tracking">
+            <h2 data-translate="tracking-title">Recent Donations</h2>
+            <table class="tracking-table">
+                <thead>
+                    <tr>
+                        <th data-translate="table-date">Date</th>
+                        <th data-translate="table-donor">Donor</th>
+                        <th data-translate="table-amount">Amount</th>
+                        <th data-translate="table-method">Method</th>
+                    </tr>
+                </thead>
+                <tbody id="donationsList">
+                    <!-- Donation records will be dynamically populated -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate="footer-text">© 2024 Unity Force Bangladesh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // Modal handling
+        const modal = document.getElementById('donationModal');
+        const closeModal = document.querySelector('.close-modal');
+        const paymentMethodSpan = document.getElementById('paymentMethod');
+        const customAmountInput = document.getElementById('customAmount');
+        const successMessage = document.getElementById('successMessage');
+
+        function openDonationModal(method) {
+            paymentMethodSpan.textContent = method;
+            modal.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        closeModal.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => {
+            if (e.target == modal) modal.style.display = 'none';
+        }
+
+        // Amount buttons handling
+        const amountButtons = document.querySelectorAll('.amount-btn');
+        let selectedAmount = null;
+
+        amountButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                amountButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const amount = btn.dataset.amount;
+                if (amount === 'custom') {
+                    customAmountInput.style.display = 'block';
+                    selectedAmount = null;
+                } else {
+                    customAmountInput.style.display = 'none';
+                    selectedAmount = parseInt(amount);
+                }
+            });
+        });
+
+        customAmountInput.addEventListener('input', (e) => {
+            selectedAmount = parseInt(e.target.value) || null;
+        });
+
+        // Donation form handling
+        const donationForm = document.getElementById('donationForm');
+        donationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (!selectedAmount && !customAmountInput.value) {
+                alert('Please select or enter an amount');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            // Simulate payment processing
+            setTimeout(() => {
+                successMessage.style.display = 'block';
+                donationForm.reset();
+                amountButtons.forEach(btn => btn.classList.remove('active'));
+                customAmountInput.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = translations[currentLanguage]['confirm-donation'] || 'Confirm Donation';
+                
+                // Add to donation tracking
+                addDonationRecord({
+                    date: new Date().toLocaleDateString(),
+                    donor: document.getElementById('donorName').value,
+                    amount: selectedAmount || parseInt(customAmountInput.value),
+                    method: paymentMethodSpan.textContent
+                });
+
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 2000);
+            }, 2000);
+        });
+
+        // Donation tracking
+        function addDonationRecord(donation) {
+            const donationsList = document.getElementById('donationsList');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${donation.date}</td>
+                <td>${donation.donor}</td>
+                <td>${donation.amount.toLocaleString()} BDT</td>
+                <td>${donation.method}</td>
+            `;
+            donationsList.insertBefore(row, donationsList.firstChild);
+        }
+
+        // Initialize with some sample donations
+        const sampleDonations = [
+            { date: '2024-01-15', donor: 'Anonymous', amount: 1000, method: 'bKash' },
+            { date: '2024-01-14', donor: 'Kamal Ahmed', amount: 5000, method: 'Nagad' },
+            { date: '2024-01-13', donor: 'Fatima Rahman', amount: 2000, method: 'Upay' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            sampleDonations.forEach(donation => addDonationRecord(donation));
+        });
+    </script>
+</body>
+</html>
