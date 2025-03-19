@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Unity Force Bangladesh - Our mission, activities, and plans for Chattogram">
+    <meta name="keywords" content="Unity Force Bangladesh, about us, volunteer organization, Chattogram">
+    <title>About Us - Unity Force Bangladesh</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 139, 0.9), rgba(255, 0, 0, 0.9)),
+                        url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+        }
+
+        .mission-vision {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .mission-vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .mission-card,
+        .vision-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .mission-card i,
+        .vision-card i {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .activities {
+            padding: 4rem 0;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .activity-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .activity-content {
+            padding: 1.5rem;
+        }
+
+        .activity-content h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .future-plans {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .plans-timeline {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            border-left: 2px solid var(--primary-blue);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary-red);
+        }
+
+        .social-links {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook-btn {
+            background: #1877f2;
+        }
+
+        .facebook-group-btn {
+            background: #3b5998;
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-hero p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">Unity Force BD</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-translate="nav-home">Home</a></li>
+                <li><a href="complaint.html" class="nav-link" data-translate="nav-complaint">File a Complaint</a></li>
+                <li><a href="blood-donation.html" class="nav-link" data-translate="nav-blood">Blood Donation</a></li>
+                <li><a href="health-treatment.html" class="nav-link" data-translate="nav-health">Free Health Treatment</a></li>
+                <li><a href="donate.html" class="nav-link" data-translate="nav-donate">Donate Us</a></li>
+                <li><a href="about.html" class="nav-link" data-translate="nav-about">About Us</a></li>
+                <li><a href="login.html" class="nav-link" data-translate="nav-login">Login</a></li>
+            </ul>
+            <button id="languageToggle" class="language-toggle" data-translate="language-toggle">বাংলা</button>
+        </nav>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <h1 data-translate="about-title">About Unity Force Bangladesh</h1>
+            <p data-translate="about-desc">A non-political volunteer organization dedicated to promoting harmony, unity, and providing humanitarian services in Chattogram, Bangladesh.</p>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision">
+        <div class="mission-vision-grid">
+            <div class="mission-card">
+                <i class="fas fa-bullseye"></i>
+                <h2 data-translate="mission-title">Our Mission</h2>
+                <p data-translate="mission-desc">To create a harmonious and united community in Chattogram through volunteer work and humanitarian services, ensuring every citizen has access to essential support and assistance.</p>
+            </div>
+            <div class="vision-card">
+                <i class="fas fa-eye"></i>
+                <h2 data-translate="vision-title">Our Vision</h2>
+                <p data-translate="vision-desc">To become the leading volunteer organization in Chattogram, fostering a society where unity prevails and every individual's basic needs are met through collective effort and mutual support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Activities Section -->
+    <section class="activities">
+        <div class="container">
+            <h2 class="section-title" data-translate="activities-title">Current Activities</h2>
+            <div class="activities-grid">
+                <div class="activity-card">
+                    <img src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Blood Donation Camp" class="activity-image">
+                    <div class="activity-content">
+                        <h3 data-translate="activity1-title">Blood Donation Camps</h3>
+                        <p data-translate="activity1-desc">Regular blood donation camps organized across Chattogram to ensure blood availability for those in need.</p>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Medical Camp" class="activity-image">
+                    <div class="activity-content">
+                        <h3 data-translate="activity2-title">Free Medical Camps</h3>
+                        <p data-translate="activity2-desc">Monthly medical camps providing free health check-ups and treatments to underprivileged communities.</p>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Community Support" class="activity-image">
+                    <div class="activity-content">
+                        <h3 data-translate="activity3-title">Community Support</h3>
+                        <p data-translate="activity3-desc">Various community support programs including education support, emergency assistance, and social welfare activities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Plans Section -->
+    <section class="future-plans">
+        <div class="container">
+            <h2 class="section-title" data-translate="plans-title">Plans for Improving Chattogram</h2>
+            <div class="plans-timeline">
+                <div class="timeline-item">
+                    <h3 data-translate="plan1-title">Healthcare Accessibility</h3>
+                    <p data-translate="plan1-desc">Establish permanent free medical centers in key areas of Chattogram to provide continuous healthcare support.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 data-translate="plan2-title">Education Support</h3>
+                    <p data-translate="plan2-desc">Launch scholarship programs and free coaching centers for underprivileged students.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 data-translate="plan3-title">Emergency Response</h3>
+                    <p data-translate="plan3-desc">Create a rapid emergency response team for immediate assistance during natural disasters or emergencies.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 data-translate="plan4-title">Community Development</h3>
+                    <p data-translate="plan4-desc">Implement various community development projects focusing on sanitation, clean water, and environmental protection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Links Section -->
+    <section class="social-links">
+        <div class="container">
+            <h2 class="section-title" data-translate="social-title">Connect With Us</h2>
+            <div class="social-buttons">
+                <a href="https://facebook.com/unityforcebd" target="_blank" class="social-btn facebook-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    <span data-translate="facebook-page">Official Facebook Page</span>
+                </a>
+                <a href="https://facebook.com/groups/unityforcebd" target="_blank" class="social-btn facebook-group-btn">
+                    <i class="fas fa-users"></i>
+                    <span data-translate="facebook-group">Join Our Facebook Group</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate="footer-text">© 2024 Unity Force Bangladesh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
