@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Panel - Unity Force Bangladesh">
+    <meta name="keywords" content="admin, control panel, Unity Force Bangladesh">
+    <title>Admin Panel - Unity Force Bangladesh</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .admin-login {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .panel-header {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .admin-welcome {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+        }
+
+        .logout-btn {
+            background: var(--primary-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.9;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .admin-tab {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-tab.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: opacity 0.3s;
+        }
+
+        .approve-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .reject-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .view-btn {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .filter-options {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-options select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+
+            .admin-tab {
+                flex: 1 1 calc(50% - 0.5rem);
+            }
+
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">Unity Force BD</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-translate="nav-home">Home</a></li>
+                <li><a href="complaint.html" class="nav-link" data-translate="nav-complaint">File a Complaint</a></li>
+                <li><a href="blood-donation.html" class="nav-link" data-translate="nav-blood">Blood Donation</a></li>
+                <li><a href="health-treatment.html" class="nav-link" data-translate="nav-health">Free Health Treatment</a></li>
+                <li><a href="donate.html" class="nav-link" data-translate="nav-donate">Donate Us</a></li>
+                <li><a href="about.html" class="nav-link" data-translate="nav-about">About Us</a></li>
+                <li><a href="login.html" class="nav-link" data-translate="nav-login">Login</a></li>
+            </ul>
+            <button id="languageToggle" class="language-toggle" data-translate="language-toggle">বাংলা</button>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <!-- Admin Login Form -->
+        <div class="admin-login" id="adminLogin">
+            <h2 class="section-title" data-translate="admin-login-title">Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail" data-translate="form-email">Email</label>
+                    <input type="email" id="adminEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword" data-translate="form-password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="adminPassword" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" data-translate="login-btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="adminPanel">
+            <!-- Panel Header -->
+            <div class="panel-header">
+                <div class="admin-welcome">
+                    Welcome, <span id="adminName">Admin</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="users">
+                    <i class="fas fa-users"></i> Users
+                </div>
+                <div class="admin-tab" data-tab="complaints">
+                    <i class="fas fa-exclamation-circle"></i> Complaints
+                </div>
+                <div class="admin-tab" data-tab="donors">
+                    <i class="fas fa-heart"></i> Blood Donors
+                </div>
+                <div class="admin-tab" data-tab="appointments">
+                    <i class="fas fa-calendar-check"></i> Appointments
+                </div>
+                <div class="admin-tab" data-tab="donations">
+                    <i class="fas fa-hand-holding-heart"></i> Donations
+                </div>
+            </div>
+
+            <!-- Tab Contents -->
+            <!-- Users Tab -->
+            <div class="tab-content active" id="usersContent">
+                <h3>User Management</h3>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search users...">
+                    <button><i class="fas fa-search"></i> Search</button>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Blood Group</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>John Doe</td>
+                            <td>john@example.com</td>
+                            <td>01712345678</td>
+                            <td>A+</td>
+                            <td>Active</td>
+                            <td>
+                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn reject-btn"><i class="fas fa-ban"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Complaints Tab -->
+            <div class="tab-content" id="complaintsContent">
+                <h3>Complaints Management</h3>
+                <div class="filter-options">
+                    <select>
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="investigating">Investigating</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Complainant</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>2024-01-15</td>
+                            <td>Jane Smith</td>
+                            <td>Harassment</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn approve-btn"><i class="fas fa-check"></i></button>
+                                <button class="action-btn reject-btn"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Blood Donors Tab -->
+            <div class="tab-content" id="donorsContent">
+                <h3>Blood Donor Management</h3>
+                <div class="filter-options">
+                    <select>
+                        <option value="">All Blood Groups</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Blood Group</th>
+                            <th>Phone</th>
+                            <th>Last Donation</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>Mike Johnson</td>
+                            <td>O+</td>
+                            <td>01912345678</td>
+                            <td>2023-12-15</td>
+                            <td>Available</td>
+                            <td>
+                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn approve-btn"><i class="fas fa-check"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div class="tab-content" id="appointmentsContent">
+                <h3>Appointment Management</h3>
+                <div class="filter-options">
+                    <select>
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Time Slot</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>2024-01-20</td>
+                            <td>Sarah Williams</td>
+                            <td>Dr. Kamal Ahmed</td>
+                            <td>10:00 AM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn approve-btn"><i class="fas fa-check"></i></button>
+                                <button class="action-btn reject-btn"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Donations Tab -->
+            <div class="tab-content" id="donationsContent">
+                <h3>Donation Management</h3>
+                <div class="filter-options">
+                    <select>
+                        <option value="">All Methods</option>
+                        <option value="bkash">bKash</option>
+                        <option value="nagad">Nagad</option>
+                        <option value="upay">Upay</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Donor</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>2024-01-15</td>
+                            <td>David Brown</td>
+                            <td>5000 BDT</td>
+                            <td>bKash</td>
+                            <td>Completed</td>
+                            <td>
+                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate="footer-text">© 2024 Unity Force Bangladesh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // Admin Login handling
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const adminLogin = document.getElementById('adminLogin');
+        const adminPanel = document.getElementById('adminPanel');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const adminName = document.getElementById('adminName');
+
+        adminLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+
+            // Simulate admin authentication (demo credentials)
+            if (email === 'admin@unityforce.bd' && password === 'admin123') {
+                adminLogin.style.display = 'none';
+                adminPanel.style.display = 'block';
+                adminName.textContent = 'Admin User';
+            } else {
+                alert('Invalid credentials');
+            }
+        });
+
+        // Logout handling
+        logoutBtn.addEventListener('click', () => {
+            adminLogin.style.display = 'block';
+            adminPanel.style.display = 'none';
+            adminLoginForm.reset();
+        });
+
+        // Tab switching
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        adminTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab;
+
+                // Update active tab
+                adminTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Show corresponding content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === `${tabId}Content`) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Action button handling
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.action-btn')) {
+                const button = e.target.closest('.action-btn');
+                const action = button.classList.contains('approve-btn') ? 'approve' :
+                             button.classList.contains('reject-btn') ? 'reject' : 'view';
+                const row = button.closest('tr');
+                const name = row.cells[0].textContent;
+
+                switch(action) {
+                    case 'approve':
+                        alert(`Approved: ${name}`);
+                        break;
+                    case 'reject':
+                        alert(`Rejected: ${name}`);
+                        break;
+                    case 'view':
+                        alert(`Viewing details for: ${name}`);
+                        break;
+                }
+            }
+        });
+
+        // Search functionality
+        const searchInputs = document.querySelectorAll('.search-bar input');
+        searchInputs.forEach(input => {
+            input.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const table = e.target.closest('.tab-content').querySelector('.data-table');
+                const rows = table.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm) ? '' : 'none';
+                });
+            });
+        });
+
+        // Filter functionality
+        const filterSelects = document.querySelectorAll('.filter-options select');
+        filterSelects.forEach(select => {
+            select.addEventListener('change', (e) => {
+                const filterValue = e.target.value.toLowerCase();
+                const table = e.target.closest('.tab-content').querySelector('.data-table');
+                const rows = table.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    if (!filterValue) {
+                        row.style.display = '';
+                        return;
+                    }
+                    const statusCell = row.querySelector('td:nth-last-child(2)');
+                    const status = statusCell.textContent.toLowerCase();
+                    row.style.display = status.includes(filterValue) ? '' : 'none';
+                });
+            });
+        });
+
+        // Password visibility toggle
+        const togglePassword = document.querySelector('.toggle-password');
+        const passwordInput = document.getElementById('adminPassword');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type');
+            passwordInput.setAttribute('type', type === 'password' ? 'text' : 'password');
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>
