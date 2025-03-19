@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Health Treatment Services by Unity Force Bangladesh - Book appointments with volunteer doctors">
+    <meta name="keywords" content="free health treatment, medical services, Unity Force Bangladesh, doctor appointments">
+    <title>Free Health Treatment - Unity Force Bangladesh</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .health-services {
+            padding: 2rem 0;
+        }
+
+        .service-info {
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-red));
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .service-info h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .doctor-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .doctor-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .doctor-info {
+            padding: 1.5rem;
+        }
+
+        .doctor-name {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .doctor-specialty {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+
+        .doctor-details {
+            margin-bottom: 1rem;
+        }
+
+        .doctor-details p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .doctor-details i {
+            color: var(--primary-blue);
+            width: 20px;
+        }
+
+        .book-btn {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .book-btn:hover {
+            background: var(--primary-red);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .appointment-form {
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .service-info {
+                margin: 1rem;
+            }
+            
+            .doctors-grid {
+                margin: 1rem;
+            }
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filter-form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-form select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px;
+        }
+
+        .schedule-table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: collapse;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .schedule-table th {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .schedule-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">Unity Force BD</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-translate="nav-home">Home</a></li>
+                <li><a href="complaint.html" class="nav-link" data-translate="nav-complaint">File a Complaint</a></li>
+                <li><a href="blood-donation.html" class="nav-link" data-translate="nav-blood">Blood Donation</a></li>
+                <li><a href="health-treatment.html" class="nav-link" data-translate="nav-health">Free Health Treatment</a></li>
+                <li><a href="donate.html" class="nav-link" data-translate="nav-donate">Donate Us</a></li>
+                <li><a href="about.html" class="nav-link" data-translate="nav-about">About Us</a></li>
+                <li><a href="login.html" class="nav-link" data-translate="nav-login">Login</a></li>
+            </ul>
+            <button id="languageToggle" class="language-toggle" data-translate="language-toggle">বাংলা</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Service Information -->
+        <section class="service-info">
+            <h2 data-translate="health-service-title">Free Health Treatment Services</h2>
+            <p data-translate="health-service-desc">Our volunteer doctors provide free medical treatment for 30 days each month</p>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <h3 data-translate="filter-title">Find Doctors</h3>
+            <form class="filter-form" id="filterForm">
+                <select id="specialtyFilter">
+                    <option value="" data-translate="select-specialty">Select Specialty</option>
+                    <option value="general">General Medicine</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="gynecology">Gynecology</option>
+                </select>
+                <select id="hospitalFilter">
+                    <option value="" data-translate="select-hospital">Select Hospital</option>
+                    <option value="chittagong-medical">Chittagong Medical College Hospital</option>
+                    <option value="metropolitan">Metropolitan Hospital</option>
+                    <option value="imperial">Imperial Hospital</option>
+                </select>
+                <button type="submit" class="btn btn-primary" data-translate="filter-btn">Filter</button>
+            </form>
+        </section>
+
+        <!-- Doctors Grid -->
+        <section class="doctors-grid" id="doctorsGrid">
+            <!-- Doctor cards will be dynamically populated -->
+        </section>
+
+        <!-- Appointment Modal -->
+        <div class="modal" id="appointmentModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 data-translate="book-appointment">Book Appointment</h2>
+                <div class="success-message" id="successMessage" data-translate="appointment-success">
+                    Your appointment has been booked successfully!
+                </div>
+                <form class="appointment-form" id="appointmentForm">
+                    <div class="form-group">
+                        <label for="patientName" data-translate="form-name">Name</label>
+                        <input type="text" id="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientPhone" data-translate="form-phone">Phone Number</label>
+                        <input type="tel" id="patientPhone" required pattern="[0-9]{11}">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDate" data-translate="form-date">Preferred Date</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentTime" data-translate="form-time">Preferred Time</label>
+                        <select id="appointmentTime" required>
+                            <option value="morning">Morning (9 AM - 12 PM)</option>
+                            <option value="afternoon">Afternoon (2 PM - 5 PM)</option>
+                            <option value="evening">Evening (6 PM - 9 PM)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="book-btn" data-translate="confirm-booking">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate="footer-text">© 2024 Unity Force Bangladesh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // Mock doctor data
+        const doctors = [
+            {
+                name: 'Dr. Kamal Ahmed',
+                specialty: 'Cardiology',
+                hospital: 'Chittagong Medical College Hospital',
+                image: 'https://via.placeholder.com/300x200',
+                schedule: 'Mon, Wed, Fri (2 PM - 5 PM)',
+                contact: '01712345678'
+            },
+            {
+                name: 'Dr. Fatima Rahman',
+                specialty: 'Pediatrics',
+                hospital: 'Metropolitan Hospital',
+                image: 'https://via.placeholder.com/300x200',
+                schedule: 'Tue, Thu, Sat (9 AM - 12 PM)',
+                contact: '01812345678'
+            },
+            {
+                name: 'Dr. Abdul Karim',
+                specialty: 'General Medicine',
+                hospital: 'Imperial Hospital',
+                image: 'https://via.placeholder.com/300x200',
+                schedule: 'Mon, Wed, Fri (6 PM - 9 PM)',
+                contact: '01912345678'
+            }
+        ];
+
+        // Render doctors
+        function renderDoctors(filteredDoctors = doctors) {
+            const doctorsGrid = document.getElementById('doctorsGrid');
+            doctorsGrid.innerHTML = '';
+
+            filteredDoctors.forEach(doctor => {
+                const doctorCard = document.createElement('div');
+                doctorCard.className = 'doctor-card';
+                doctorCard.innerHTML = `
+                    <img src="${doctor.image}" alt="${doctor.name}" class="doctor-image">
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">${doctor.name}</h3>
+                        <p class="doctor-specialty">${doctor.specialty}</p>
+                        <div class="doctor-details">
+                            <p><i class="fas fa-hospital"></i> ${doctor.hospital}</p>
+                            <p><i class="fas fa-clock"></i> ${doctor.schedule}</p>
+                            <p><i class="fas fa-phone"></i> ${doctor.contact}</p>
+                        </div>
+                        <button class="book-btn" onclick="openAppointmentModal('${doctor.name}')" data-translate="book-appointment">
+                            Book Appointment
+                        </button>
+                    </div>
+                `;
+                doctorsGrid.appendChild(doctorCard);
+            });
+        }
+
+        // Filter handling
+        const filterForm = document.getElementById('filterForm');
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const specialty = document.getElementById('specialtyFilter').value;
+            const hospital = document.getElementById('hospitalFilter').value;
+
+            let filteredDoctors = doctors;
+            if (specialty) {
+                filteredDoctors = filteredDoctors.filter(d => d.specialty.toLowerCase() === specialty);
+            }
+            if (hospital) {
+                filteredDoctors = filteredDoctors.filter(d => d.hospital.toLowerCase().includes(hospital));
+            }
+
+            renderDoctors(filteredDoctors);
+        });
+
+        // Modal handling
+        const modal = document.getElementById('appointmentModal');
+        const closeModal = document.querySelector('.close-modal');
+        let selectedDoctor = '';
+
+        function openAppointmentModal(doctorName) {
+            selectedDoctor = doctorName;
+            modal.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        closeModal.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => {
+            if (e.target == modal) modal.style.display = 'none';
+        }
+
+        // Appointment form handling
+        const appointmentForm = document.getElementById('appointmentForm');
+        appointmentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('.book-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+
+            // Simulate API call
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'block';
+                appointmentForm.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = translations[currentLanguage]['confirm-booking'] || 'Confirm Booking';
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 2000);
+            }, 1500);
+        });
+
+        // Initialize doctors grid
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDoctors();
+        });
+    </script>
+</body>
+</html>
