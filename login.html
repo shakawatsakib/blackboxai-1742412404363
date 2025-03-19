@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login and Register with Unity Force Bangladesh">
+    <meta name="keywords" content="login, register, Unity Force Bangladesh, user account">
+    <title>Login & Register - Unity Force Bangladesh</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            margin-bottom: -2px;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-red);
+        }
+
+        .admin-login-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .admin-login-link a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .admin-login-link a:hover {
+            color: var(--primary-red);
+        }
+
+        .success-message,
+        .error-message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+
+        .social-login {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-btn {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            transition: opacity 0.3s;
+        }
+
+        .social-btn:hover {
+            opacity: 0.9;
+        }
+
+        .google-btn {
+            background: #db4437;
+        }
+
+        .facebook-btn {
+            background: #4267B2;
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">Unity Force BD</a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-translate="nav-home">Home</a></li>
+                <li><a href="complaint.html" class="nav-link" data-translate="nav-complaint">File a Complaint</a></li>
+                <li><a href="blood-donation.html" class="nav-link" data-translate="nav-blood">Blood Donation</a></li>
+                <li><a href="health-treatment.html" class="nav-link" data-translate="nav-health">Free Health Treatment</a></li>
+                <li><a href="donate.html" class="nav-link" data-translate="nav-donate">Donate Us</a></li>
+                <li><a href="about.html" class="nav-link" data-translate="nav-about">About Us</a></li>
+                <li><a href="login.html" class="nav-link" data-translate="nav-login">Login</a></li>
+            </ul>
+            <button id="languageToggle" class="language-toggle" data-translate="language-toggle">বাংলা</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="auth-container">
+            <!-- Success/Error Messages -->
+            <div class="success-message" id="successMessage"></div>
+            <div class="error-message" id="errorMessage"></div>
+
+            <!-- Auth Tabs -->
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login" data-translate="login-tab">Login</div>
+                <div class="auth-tab" data-tab="register" data-translate="register-tab">Register</div>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail" data-translate="form-email-phone">Email or Phone</label>
+                    <input type="text" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" data-translate="form-password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="loginPassword" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" data-translate="login-btn">Login</button>
+
+                <div class="social-login">
+                    <p data-translate="social-login">Or login with</p>
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google-btn">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="social-btn facebook-btn">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Registration Form -->
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerName" data-translate="form-name">Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone" data-translate="form-phone">Phone Number</label>
+                    <input type="tel" id="registerPhone" required pattern="[0-9]{11}">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail" data-translate="form-email">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerBloodGroup" data-translate="form-blood-group">Blood Group</label>
+                    <select id="registerBloodGroup" required>
+                        <option value="" data-translate="select-blood-group">Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword" data-translate="form-password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="registerPassword" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" data-translate="form-confirm-password">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="confirmPassword" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" data-translate="register-btn">Register</button>
+            </form>
+
+            <!-- Admin Login Link -->
+            <div class="admin-login-link">
+                <a href="admin.html" data-translate="admin-login">Admin Login</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p data-translate="footer-text">© 2024 Unity Force Bangladesh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // Tab switching
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = document.querySelectorAll('.auth-form');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const formType = tab.dataset.tab;
+                
+                // Update active tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding form
+                authForms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id === `${formType}Form`) {
+                        form.classList.add('active');
+                    }
+                });
+
+                // Clear messages
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+            });
+        });
+
+        // Password visibility toggle
+        const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+        togglePasswordButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const passwordInput = button.previousElementSibling;
+                const type = passwordInput.getAttribute('type');
+                passwordInput.setAttribute('type', type === 'password' ? 'text' : 'password');
+                button.classList.toggle('fa-eye');
+                button.classList.toggle('fa-eye-slash');
+            });
+        });
+
+        // Login form handling
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+            // Simulate login
+            setTimeout(() => {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                if (email && password) {
+                    successMessage.textContent = 'Login successful! Redirecting...';
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    
+                    // Simulate redirect
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    errorMessage.textContent = 'Invalid email/phone or password';
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                }
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = translations[currentLanguage]['login-btn'] || 'Login';
+            }, 1500);
+        });
+
+        // Registration form handling
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+            // Validate passwords match
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = translations[currentLanguage]['register-btn'] || 'Register';
+                return;
+            }
+
+            // Simulate registration
+            setTimeout(() => {
+                successMessage.textContent = 'Registration successful! Please login.';
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                registerForm.reset();
+
+                // Switch to login tab
+                setTimeout(() => {
+                    document.querySelector('[data-tab="login"]').click();
+                }, 1500);
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = translations[currentLanguage]['register-btn'] || 'Register';
+            }, 1500);
+        });
+
+        // Social login handling
+        const socialButtons = document.querySelectorAll('.social-btn');
+        socialButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const provider = button.classList.contains('google-btn') ? 'Google' : 'Facebook';
+                alert(`${provider} login is not implemented in this demo.`);
+            });
+        });
+    </script>
+</body>
+</html>
