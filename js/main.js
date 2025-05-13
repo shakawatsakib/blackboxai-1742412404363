@@ -17,7 +17,7 @@ const translations = {
         'emergency-title': 'Emergency Helpline',
         'members-title': 'Our Founding Members',
         'stations-title': 'Police Stations in Chattogram',
-        'footer-text': '© 2024 Unity Force Bangladesh. All rights reserved.',
+        'footer-text': '© 2025 Unity Force Bangladesh. All rights reserved.',
         'language-toggle': 'বাংলা',
     },
     bn: {
@@ -33,7 +33,7 @@ const translations = {
         'emergency-title': 'জরুরি হটলাইন',
         'members-title': 'আমাদের প্রতিষ্ঠাতা সদস্যগণ',
         'stations-title': 'চট্টগ্রামের পুলিশ স্টেশনসমূহ',
-        'footer-text': '© ২০২৪ ইউনিটি ফোর্স বাংলাদেশ। সর্বস্বত্ব সংরক্ষিত।',
+        'footer-text': '© ২০২৫ ইউনিটি ফোর্স বাংলাদেশ। সর্বস্বত্ব সংরক্ষিত।',
         'language-toggle': 'English',
     }
 };
